@@ -2,7 +2,7 @@
 
 ## Purpose
 
-`agentlink` is a small Unix Rust CLI that keeps a remote Git registry available offline and links its instructions and Agent Skills into coding-agent paths.
+AgentLink syncs your skills across agents and helps them maintain the library.
 
 ## Constraints
 
@@ -29,6 +29,6 @@
 
 ## Verification
 
-Run the formatting, lint, tests and fresh-install checks in [README.md](README.md#develop-and-test). Test the full provider suite in the integration image; default Cargo tests intentionally skip tests requiring provider CLIs. Fixtures must not use host agent configuration or credentials. Preserve latest CLI installation at test startup, version logs, exact image digests, execution deadlines and cleanup for Kubernetes runs.
+Run the formatting, lint, tests and fresh-install checks in [development](docs/development.md#run-the-checks). Test the full provider suite in the integration image; default Cargo tests intentionally skip tests requiring provider CLIs. Fixtures must not use host agent configuration or credentials. Preserve latest CLI installation at test startup, version logs, exact image digests, execution deadlines and cleanup for Kubernetes runs.
 
 Use release builds for size and performance measurements. Profile before micro-optimizing; the `profiling` Cargo profile retains symbols. Public releases contain the tested source commit, license, supported-platform binary and checksums.

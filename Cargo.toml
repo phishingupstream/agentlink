@@ -3,7 +3,7 @@ name = "agentlink"
 version = "0.6.0"
 edition = "2024"
 rust-version = "1.99"
-description = "Link shared agent instructions and selected Agent Skills into coding-agent paths"
+description = "AgentLink syncs your skills across agents and helps them maintain the library."
 license = "CC-BY-NC-4.0"
 repository = "https://github.com/phishingupstream/agentlink"
 
