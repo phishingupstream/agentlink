@@ -1,0 +1,17 @@
+#!/bin/sh
+set -eu
+
+npm install --global --omit=dev \
+    @anthropic-ai/claude-code@latest \
+    @earendil-works/pi-coding-agent@latest \
+    @google/gemini-cli@latest \
+    @openai/codex@latest
+
+printf 'Agent CLI versions tested:\n'
+for agent in claude codex gemini pi; do
+    printf '%s: ' "$agent"
+    "$agent" --version
+done
+printf '\n'
+
+exec /usr/local/libexec/agentlink-integration-tests "$@"

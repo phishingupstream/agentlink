@@ -1,0 +1,7 @@
+{
+  "extends": ["group:all"],
+  "separateMajorMinor": true,
+  "prConcurrentLimit": 2,
+  "prBodyColumns": ["Package", "Update", "Change"],
+  "prBodyTemplate": "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{configDescription}}}{{{controls}}}{{{footer}}}"
+}

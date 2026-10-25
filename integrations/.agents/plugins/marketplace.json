@@ -1,0 +1,20 @@
+{
+  "name": "agentlink",
+  "interface": {
+    "displayName": "Agentlink"
+  },
+  "plugins": [
+    {
+      "name": "agentlink",
+      "source": {
+        "source": "local",
+        "path": "./plugins/agentlink"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer"
+    }
+  ]
+}

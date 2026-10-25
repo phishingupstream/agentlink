@@ -1,0 +1,39 @@
+#!/bin/sh
+set -eu
+
+cd "$(dirname "$0")/../.."
+revision=$(git rev-parse --short HEAD)
+export IMAGE_TAG="$revision-$(date +%s)-$$"
+build_dir=$(mktemp -d)
+trap 'rm -rf "$build_dir"' EXIT INT TERM
+: "${IMAGE_REPOSITORY:?Set IMAGE_REPOSITORY to a registry accessible by your builder and cluster}"
+namespace=${AGENTLINK_TEST_NAMESPACE:-agentlink-test}
+set --
+if [ -n "${BAKE_DEFAULTS:-}" ]; then
+    set -- --file "$BAKE_DEFAULTS"
+fi
+docker buildx bake "$@" --file docker-bake.hcl --push --metadata-file "$build_dir/build.json" --progress plain integration
+image="$IMAGE_REPOSITORY@$(jq -er '.["integration"]["containerimage.digest"]' "$build_dir/build.json")"
+
+kubectl create namespace "$namespace" --dry-run=client -o yaml | kubectl apply -f - >/dev/null
+run=$(sed "s|AGENTLINK_TEST_IMAGE|$image|" tests/integration/job.yaml | kubectl -n "$namespace" create -f - -o name)
+trap 'kubectl -n "$namespace" delete "$run" --ignore-not-found >/dev/null; rm -rf "$build_dir"' EXIT INT TERM
+printf 'Started %s with %s\n' "$run" "$image"
+
+# Watch both terminal conditions so a failing suite returns immediately.
+attempt=0
+condition=
+while [ "$attempt" -lt 660 ]; do
+    condition=$(kubectl -n "$namespace" get "$run" -o jsonpath='{.status.conditions[?(@.status=="True")].type}')
+    case "$condition" in
+        *Complete*|*Failed*) break ;;
+    esac
+    sleep 1
+    attempt=$((attempt + 1))
+done
+
+kubectl -n "$namespace" logs "$run" --all-containers --tail=-1
+case "$condition" in
+    *Complete*) exit 0 ;;
+    *) kubectl -n "$namespace" describe "$run" >&2; exit 1 ;;
+esac

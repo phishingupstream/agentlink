@@ -1,0 +1,37 @@
+[package]
+name = "agentlink"
+version = "0.6.0"
+edition = "2024"
+rust-version = "1.99"
+description = "Link shared agent instructions and selected Agent Skills into coding-agent paths"
+license = "CC-BY-NC-4.0"
+repository = "https://github.com/phishingupstream/agentlink"
+
+[dependencies]
+anstyle = "1"
+clap = { version = "4", default-features = false, features = [
+    "derive",
+    "error-context",
+    "help",
+    "std",
+    "usage",
+] }
+serde = { version = "1", features = ["derive"] }
+toml = "1.0"
+
+[dev-dependencies]
+assert_cmd = "2"
+assert_fs = "1"
+predicates = "3"
+
+[profile.release]
+opt-level = "z"
+codegen-units = 1
+lto = true
+panic = "abort"
+strip = "symbols"
+
+[profile.profiling]
+inherits = "release"
+debug = "line-tables-only"
+strip = false

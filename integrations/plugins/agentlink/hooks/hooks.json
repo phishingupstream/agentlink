@@ -1,0 +1,16 @@
+{
+  "description": "Keep agentlink content current at session startup",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "agentlink update-if-due"
+          }
+        ]
+      }
+    ]
+  }
+}

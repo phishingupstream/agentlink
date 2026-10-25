@@ -1,0 +1,10 @@
+/target/
+__pycache__/
+*.pyc
+
+# Generated skill links and verification artifacts
+/.agents/skills/
+/.claude/skills/
+/.buildx/
+/build.json
+/test-results/

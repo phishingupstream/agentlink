@@ -1,0 +1,7 @@
+.git
+.buildx
+build.json
+target
+test-results
+.agents
+.claude

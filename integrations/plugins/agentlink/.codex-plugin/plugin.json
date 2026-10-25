@@ -1,0 +1,19 @@
+{
+  "name": "agentlink",
+  "version": "0.5.0",
+  "description": "Check for shared agent instruction and skill updates when a session starts",
+  "author": {
+    "name": "Tom Salmon"
+  },
+  "interface": {
+    "displayName": "Agentlink",
+    "shortDescription": "Keep shared agent content current.",
+    "longDescription": "Check the agentlink registry for updates when a new session starts.",
+    "developerName": "Tom Salmon",
+    "category": "Developer",
+    "capabilities": [],
+    "defaultPrompt": [
+      "Check shared agent instructions and skills for updates."
+    ]
+  }
+}
